@@ -1,1 +1,1 @@
-This is the folder with the raspi python code
+This is the folder with the RPi python code
