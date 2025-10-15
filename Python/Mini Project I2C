@@ -1,0 +1,51 @@
+# Mini Project I2C 
+#
+# Max Smith
+# 9/29/25
+
+# Imports for I2C
+from smbus2 import SMBus
+from time import sleep
+
+# Imports for LCD
+import board
+import adafruit_character_lcd.character_lcd_rgb_i2c as character_lcd
+
+
+
+
+# Set up
+
+# I2C address for the Arduino = 8
+ARD_ADDR = 8
+
+# Initialize the SMBis library with I2C bus 1
+i2c = SMBus(1)
+
+
+
+
+# Functions
+
+# LCD print function
+def LCD_print(position):
+
+    lcd_coloms = 16
+    lcd_rows = 2
+
+    i2c = board.I2C()
+
+    lcd = character_lcd.Character_LCD_RGB_I2C(i2c, lcd_coloms, lcd_rows)
+    lcd.clear()
+    lcd.color = [0, 100, 0]
+    lcd.text_direction = lcd.LEFT_TO_RIGHT
+    lcd.message = '[' + position[1] + ',' + position[1] + ']'
+
+# Send packet to arduino
+def sendToArd(position):
+
+    offset = 0 # Pre set to 0
+
+    command = [ord(character) for character in position]
+    i2c.write_i2c_block_data(ARD_ADDR, offset, command)
+
