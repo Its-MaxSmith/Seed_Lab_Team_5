@@ -18,12 +18,26 @@ import LCD_print
 # Main program
 def main():
 
-    # Load the saved calibration data
+    # Load calibration data
     data = np.load('camera_calibration_data.npz')
     mtx = data['mtx']
     dist = data['dist']
 
+    # Load a new image to undistort
     capture = cv.VideoCapture(0)
+
+    # Get image dimensions
+    h, w = capture.shape[:2]
+
+    # Compute the new camera matrix and ROI
+    newcameramtx, roi = cv.getOptimalNewCameraMatrix(mtx, dist, (w, h), 1, (w, h))
+
+    # Undistort the image
+    dst = cv.undistort(capture, mtx, dist, None, newcameramtx)
+
+    # Crop the image to the valid ROI
+    x, y, w, h = roi
+    dst = dst[y:y+h, x:x+w]
 
     i = 0 # For print delay
     msg = 'No message' # For degree message
