@@ -46,4 +46,4 @@ def arucoDetector(frame: np.ndarray):
                 location = 3
             elif center[0] >= width/2 and center[1] < height/2:
                 location = 4
-    return location, corners
+    return location
