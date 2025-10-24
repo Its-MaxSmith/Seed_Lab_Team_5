@@ -17,6 +17,12 @@ import LCD_print
 
 # Main program
 def main():
+
+    # Load the saved calibration data
+    data = np.load('camera_calibration_data.npz')
+    mtx = data['mtx']
+    dist = data['dist']
+
     capture = cv.VideoCapture(0)
 
     i = 0 # For print delay
