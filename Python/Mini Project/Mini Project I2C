@@ -41,7 +41,6 @@ def LCD_print(position):
     lcd.text_direction = lcd.LEFT_TO_RIGHT
     lcd.message = '[' + position[1] + ',' + position[1] + ']'
 
-# Send packet to arduino
 def sendToArd(position):
 
     offset = 0 # Pre set to 0
