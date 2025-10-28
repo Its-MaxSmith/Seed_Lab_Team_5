@@ -1,11 +1,3 @@
-# Calibration.py
-#
-# Max Smith & Garret Reader
-# 10/27/28
-# 
-# Description: Code to calibrate the camera usign a checkerboard patttern. This creates a file for the calibrated
-# camera that can be used in other code to calibrate the camera without running this code.
-
 import numpy as np
 import cv2 as cv
 import glob

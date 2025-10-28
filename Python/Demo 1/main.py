@@ -3,7 +3,8 @@
 # Max Smith & Garret Reader
 # 10/13/25
 #
-# Description
+# Description: This code reads the angle between the camera and the marker. This angle is then sent to
+# the LCD through i2c.
 
 # Imports for CV
 import cv2 as cv
@@ -26,20 +27,20 @@ def main():
     # Start video capture
     capture = cv.VideoCapture(0)
     if not capture.isOpened():
-        print("❌ Could not open camera.")
+        print("Could not open camera.")
         return
 
     i = 0  # For LCD print delay
     msg = 'No message'  # Placeholder for degree message
 
-    print("📹 Live camera feed started.")
+    print("Live camera feed started.")
     print("Press 'd' to exit.\n")
 
     while True:
         isTrue, frame = capture.read()
         cv.imshow("Live Feed", frame)
         if not isTrue:
-            print("⚠️ Failed to grab frame.")
+            print("Failed to grab frame.")
             break
 
         # Get image dimensions
@@ -68,14 +69,14 @@ def main():
             try:
                 LCD_print.LCD_print(msg)
             except Exception as e:
-                print(f"⚠️ LCD error: {e}")
+                print(f"LCD error: {e}")
             i = 0
 
         i += 1
 
         # Exit if 'd' is pressed
         if cv.waitKey(20) & 0xFF == ord('d'):
-            print("🛑 Exiting live feed...")
+            print("Exiting live feed...")
             break
 
     # Cleanup
