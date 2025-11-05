@@ -12,7 +12,6 @@ import numpy as np
 
 # Aruco Library
 aruco_dict = aruco.getPredefinedDictionary(aruco.DICT_6X6_50)
-gray_frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY) # Convert frame to grayscale
 
 def RGcolorDetector(frame: np.ndarray):
 
@@ -30,7 +29,7 @@ def RGcolorDetector(frame: np.ndarray):
     upper_green = np.array([90, 255, 255])
 
     # Gray scale frame
-    gray_frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY) # Convert frame to grayscale
+    gray_frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
 
     # Decect marker
     corners, ids, rejected = aruco.detectMarkers(gray_frame, aruco_dict)

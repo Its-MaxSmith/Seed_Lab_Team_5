@@ -70,7 +70,7 @@ def main():
         msg = msg + '\n' + color
 
         # Send sngle and color to arduino
-        sendToArd.sendToArd(msg)
+        sendToArd.sendToArd(angle + color)
 
         # Update LCD occasionally
         if i >= 50:
