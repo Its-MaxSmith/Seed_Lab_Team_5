@@ -12,15 +12,15 @@ import numpy as np
 
 # Color constants
 # Red color range 
-RED_LOWER = np.array([130, 100, 100])
-RED_UPPER = np.array([180, 255, 255])
+RED_LOWER = np.array([150, 122, 170])
+RED_UPPER = np.array([180, 230, 255])
 
 # Green color range
-GREEN_LOWER = np.array([55, 76, 16])
-GREEN_UPPER = np.array([85, 175, 255])
+GREEN_LOWER = np.array([55, 110, 110])
+GREEN_UPPER = np.array([100, 215, 150])
 
 # Pixel count needed
-PIXEL_THRESHOLD = 200
+PIXEL_THRESHOLD = 50
 
 # Aruco Library
 ARUCO_DICT = aruco.getPredefinedDictionary(aruco.DICT_6X6_50)
@@ -39,6 +39,10 @@ def RGcolorDetector(frame: np.ndarray, side_width=200):
         return 'N', frame
 
     corner = corners[0][0]
+    
+    # Marker bounding box
+    x_min, y_min = np.min(corner, axis=0).astype(int)
+    x_max, y_max = np.max(corner, axis=0).astype(int)
 
     # Bounds in frame
     x_min = max(0, x_min)
@@ -62,10 +66,8 @@ def RGcolorDetector(frame: np.ndarray, side_width=200):
     right_roi = hsv[y_min:y_max, right_x_min:right_x_max]
     mask_red = cv.inRange(right_roi, RED_LOWER, RED_UPPER)
     red_pixels = cv.countNonZero(mask_red)
-
-    # Draw ROIs for visualization
-    cv.rectangle(frame, (left_x_min, y_min), (left_x_max, y_max), (0, 255, 0), 2)  # green ROI
-    cv.rectangle(frame, (right_x_min, y_min), (right_x_max, y_max), (0, 0, 255), 2)  # red ROI
+    print(str(red_pixels))
+    print(str(green_pixels))
 
     # Determine color based on pixel counts
     if green_pixels > PIXEL_THRESHOLD:
