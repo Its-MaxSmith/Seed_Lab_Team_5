@@ -31,17 +31,21 @@ def distanceDetector(frame: np.ndarray):
     
     corner = corners[0][0]
 
-    # Vectorize
-    diffs = np.diff(np.vstack([corner, corner[0]]), axis = 0)
-    side_lengths = np.linalg.norm(diffs, axis = 1)
-    P = np.mean(side_lengths)
+    best_D = None
 
-    # Find distance
-    D = (MARKER_SIZE_IN * FOCAL_LENGTH_PIXELS) / P
+    for corner in corners:
+        pts = corner[0]
+        diffs = np.diff(np.vstack([pts, pts[0]]), axis=0)
+        side_lengths = np.linalg.norm(diffs, axis=1)
+        P = np.mean(side_lengths)
+        dist = (MARKER_SIZE_IN * FOCAL_LENGTH_PIXELS) / P
 
-    # Smooth the distance estimate
-    D = round(D)
+        if best_D is None or dist < best_D:
+            best_D = dist
 
+
+    D = round(best_D)
+    
     if D < 12:
         D = 1
 
