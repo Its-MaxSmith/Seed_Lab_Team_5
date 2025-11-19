@@ -70,6 +70,9 @@ def main():
 
         msg = f"x angle: {angle}\n{color} {forward}"
 
+        if color == 'N' & angle != 'S':
+            color = 'E' #End condition if no color detected
+
         # Send angle and color to arduino
         print(forward + "," + angle + "," + color)
         sendToArd_op.sendToArd(forward + "," + angle + "," + color)
