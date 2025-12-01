@@ -16,10 +16,8 @@ from smbus2 import SMBus
 from time import sleep
 
 # Imports for function files
-import angleDetector_op
-import RGcolorDetector_op
 import sendToArd_op
-import distanceDetector_op
+import arucoHandler
 from lcd_updater import LCDupdater
 
 # Main program
@@ -59,14 +57,8 @@ def main():
         # Undistort frame
         undistorted = cv.remap(frame, mapx, mapy, cv.INTER_LINEAR)
 
-        # Run angle detection on the undistorted frame
-        angle = angleDetector_op.angleDetector(undistorted)
-
-        # Run color detection
-        color = RGcolorDetector_op.RGcolorDetector(undistorted)
-
-        # Run distance detector
-        forward = distanceDetector_op.distanceDetector(undistorted)
+        # Get distance, angle, and color
+        forward, angle, color = arucoHandler.arucoHandler(undistorted)
 
         msg = f"x angle: {angle}\n{color} {forward}"
 
